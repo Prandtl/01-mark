@@ -9,27 +9,20 @@ namespace MDownParser
 {
     static class Processor
     {
-        public static string Process(string markdown)
+        public static string Process(string text)
         {
-            return ParseParagraphs(markdown).Select(x => AddTags(x, ParagraphTag))
-                                    .Aggregate((x, i) => x + i);
+            var paragraphs=Regex.Split(text, @"\n\s*\n");
+            return paragraphs.Select(x => "<p>" + x + "</p>")
+                .Aggregate((x, i) => x + i);
         }
 
-        static string AddTags(string textWithoutTags, string tag)
+        private static void GetBorders(string paragraph)
         {
-            var sb = new StringBuilder("<" + tag + ">");
-            sb.Append(textWithoutTags);
-            sb.Append("</" + tag + ">");
-            return sb.ToString();
+
         }
 
-        private const string ParagraphPattern = @"\n\s*\n";
+        private static List<Tuple<int, int>> blockBorders;
 
-        private const string ParagraphTag = "p";
-
-        static string[] ParseParagraphs(string text)
-        {
-            return Regex.Split(text, ParagraphPattern);
-        }
+        
     }
 }

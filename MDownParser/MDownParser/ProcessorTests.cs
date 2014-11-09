@@ -43,12 +43,6 @@ namespace MDownParser
             Assert.AreEqual("<p>lalala\na\nlalala</p>", result);
         }
 
-        [Test]
-        public static void and_know_that_escape_symbol_exists()
-        {
-            var input = @"lalala\\nlalala";
-            var result = Processor.Process(input);
-            Assert.AreEqual("<p>lalala\na\nlalala</p>", result);
-        }
+
     }
 }
