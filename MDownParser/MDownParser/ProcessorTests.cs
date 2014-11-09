@@ -43,6 +43,14 @@ namespace MDownParser
             Assert.AreEqual("<p>lalala\na\nlalala</p>", result);
         }
 
+        [Test]
+        public static void put_grounded_parts_in_em_tag()
+        {
+            var input = "_lalala_";
+            var result = Processor.Process(input);
+            Assert.AreEqual("<p><em>lalala</em></p>", result);
+        }
+
 
     }
 }
