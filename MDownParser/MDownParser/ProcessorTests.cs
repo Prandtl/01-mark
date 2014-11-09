@@ -51,6 +51,13 @@ namespace MDownParser
             Assert.AreEqual("<p><em>lalala</em></p>", result);
         }
 
+        [Test]
+        public static void put_double_grounded_parts_in_strong_tag()
+        {
+            var input = "__lalala__";
+            var result = Processor.Process(input);
+            Assert.AreEqual("<strong>lalala</strong>", result);
+        }
 
     }
 }
