@@ -72,30 +72,26 @@ namespace MDownParser
             {
                 if (paragraph[i] == '_')
                 {
-                    if ((i < paragraph.Length - 2 && paragraph[i + 1] == '_') && IsValidTag(paragraph, i, "__", true))
-                    {
-                        result.Append("#3");
-                        lastTag = "__";
-                        openedTags.Push(Tuple.Create(i, "__"));
-                        i++;
-                        continue;
-                    }
                     if (lastTag == "__")
                     {
-                        if (IsValidTag(paragraph, i, "__", false)) ;
+                        if ((i < paragraph.Length - 1 && paragraph[i + 1] == '_') &&
+                            IsValidTag(paragraph, i, "__", false))
                         {
                             result.Append("#4");
                             openedTags.Pop();
                             lastTag = openedTags.Count > 0 ? openedTags.Peek().Item2 : "";
                             i++;
                             continue;
+
+
                         }
                     }
-                    if (IsValidTag(paragraph, i, "_", true))
+                    if ((i < paragraph.Length - 2 && paragraph[i + 1] == '_') && IsValidTag(paragraph, i, "__", true))
                     {
-                        result.Append("#1");
-                        lastTag = "_";
-                        openedTags.Push(Tuple.Create(i, "_"));
+                        result.Append("#3");
+                        lastTag = "__";
+                        openedTags.Push(Tuple.Create(i, "__"));
+                        i++;
                         continue;
                     }
                     if (lastTag == "_")
@@ -107,6 +103,13 @@ namespace MDownParser
                             lastTag = openedTags.Count > 0 ? openedTags.Peek().Item2 : "";
                             continue;
                         }
+                    }
+                    if (IsValidTag(paragraph, i, "_", true))
+                    {
+                        result.Append("#1");
+                        lastTag = "_";
+                        openedTags.Push(Tuple.Create(i, "_"));
+                        continue;
                     }
                 }
                 else

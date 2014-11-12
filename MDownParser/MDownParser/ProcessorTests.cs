@@ -59,5 +59,21 @@ namespace MDownParser
             Assert.AreEqual("<p><strong>lalala</strong></p>", result);
         }
 
+        [Test]
+        public static void work_with_one_inside_another()
+        {
+            var input = "yyy _xxx __lalala__ xxx_ yyy";
+            var result = Processor.Process(input);
+            Assert.AreEqual("<p>yyy <em>xxx <strong>lalala</strong> xxx</em> yyy</p>", result);
+        }
+
+        [Test]
+        public static void emphasis_inside_strong()
+        {
+            var input = "yyy __xxx _lalala_ xxx __ yyy";
+            var result = Processor.Process(input);
+            Assert.AreEqual("<p>yyy <strong>xxx <em>lalala</em> xxx </strong> yyy</p>", result);
+        }
+
     }
 }
