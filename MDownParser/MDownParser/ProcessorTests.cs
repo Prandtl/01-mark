@@ -56,7 +56,7 @@ namespace MDownParser
         {
             var input = "__lalala__";
             var result = Processor.Process(input);
-            Assert.AreEqual("<strong>lalala</strong>", result);
+            Assert.AreEqual("<p><strong>lalala</strong></p>", result);
         }
 
     }

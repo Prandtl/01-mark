@@ -15,7 +15,7 @@ namespace MDownParser
         public static string Process(string text)
         {
             var paragraphs=Regex.Split(text, @"\n\s*\n");
-            return paragraphs.Select(x => "<p>" + ParagraphPreProcessor(x) + "</p>")
+            return paragraphs.Select(x => "<p>" + ParagraphProcessor(ParagraphPreProcessor(x)) + "</p>")
                 .Aggregate((x,i)=>x+i);
         }
 
@@ -30,18 +30,23 @@ namespace MDownParser
                     {
                         case ('1'):
                             result.Append("<em>");
+                            i++;
                             break;
                         case ('2'):
                             result.Append("</em>");
+                            i++;
                             break;
                         case ('3'):
                             result.Append("<strong>");
+                            i++;
                             break;
                         case ('4'):
                             result.Append("</strong>");
+                            i++;
                             break;
                         case('#'):
                             result.Append("#");
+                            i++;
                             break;
                     }
                 }
@@ -72,6 +77,7 @@ namespace MDownParser
                         result.Append("#3");
                         lastTag = "__";
                         openedTags.Push(Tuple.Create(i, "__"));
+                        i++;
                         continue;
                     }
                     if (lastTag == "__")
@@ -81,6 +87,8 @@ namespace MDownParser
                             result.Append("#4");
                             openedTags.Pop();
                             lastTag = openedTags.Count > 0 ? openedTags.Peek().Item2 : "";
+                            i++;
+                            continue;
                         }
                     }
                     if (IsValidTag(paragraph, i, "_", true))
